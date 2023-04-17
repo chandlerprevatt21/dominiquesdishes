@@ -19,6 +19,7 @@ requests = "*"
 django = "*"
 psycopg2 = "*"
 gunicorn = "*"
+django-address = "*"
 
 [dev-packages]
 
