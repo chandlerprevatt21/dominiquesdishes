@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-body">
+    <div class="menu">
+        <a href="/catering/" class="back-to-menu"><i class="bi bi-arrow-left-circle"></i> Back to Catering Home</a>
+        <h1 class="menu-title">{{ menu.title }}</h1>
+        <div class="w100 center-align">
+            <div class="div-mini-dotted"></div>
+        </div>
+        <div class="center-align">
+        <p>*Quarter pan feeds 10-15 people, half pan feeds 16-30, full pan feeds 31-50</p>
+        </div>
+        <h3 class="menu-description">{{ menu.description }}</h3>
+        <div class="row">
+            {% for section in menu.sections.all %}
+                <div class="col-12 item-col">
+                    <div class="section-card">
+                        <h4 class="section-title">{{ section.title }}</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td class="item-price header">Quarter Pan</td>
+                                    <td class="item-price header">Half Pan</td>
+                                    <td class="item-price header">Full Pan</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in section.items.all %}
+                                <tr>
+                                    <td>
+                                        <h5 class="item-title"><b>{{ item.title }}</b></h5>
+                                        {% if item.description is not None %}
+                                        <p class="item-description">{{ item.description }}</p>
+                                        {% endif %}
+                                    </td>
+                                    <td class="item-price">{% if item.quarter_pan != 0 %}${{ item.quarter_pan }}{% endif %}</td>
+                                    <td class="item-price">{% if item.half_pan != 0 %}${{ item.half_pan }}{% endif %}</td>
+                                    <td class="item-price">{% if item.full_pan != 0 %}${{ item.full_pan }}{% endif %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .menu {
+        height: 100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.844);
+        padding-top: 125px;
+    }
+    .menu table {
+        width: 100%;
+    }
+    .back-to-menu {
+        margin-left: 10%;
+        padding-bottom: 40px !important;
+        color: rgb(26, 26, 26);
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-size: 12px;
+        transition: all 0.4s ease-in-out;
+    }
+    .back-to-menu:hover {
+        color:rgb(61, 210, 255)
+    }
+    .item-title {
+        font-size: 16px;
+        width: fit-content;
+        color: black;
+    }
+    .item-title:hover {
+        cursor: pointer;
+    }
+    .item-title b {
+        font-family: "cheap-pine-sans", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        border-bottom: rgb(255, 87, 53) solid 3px;
+    }
+    .item-title i {
+        border-bottom: none;
+        transition: all 0.4s ease-in-out;
+        font-size: 16px;
+    }
+    .item-title i:hover {
+        color: rgb(167, 238, 161);
+        transform: rotate(360deg);
+        cursor: pointer;
+    }
+    .item-description {
+        margin-bottom: 0;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+        color: black
+    }
+    .item-line {
+        border-top: solid 1px rgba(201, 200, 200, 0.627);
+        padding: 12px;
+    }
+    .item-price {
+        font-family: cheap-pine-sans, sans-serif;
+        font-weight: 300;
+        font-style: normal;
+        font-size: 16px;
+        color: black;
+        text-align: center;
+        min-width: 50px;
+        
+    }
+    .item-price.header {
+        font-size: 12px;
+        font-weight:400;
+        line-height: 18px;
+    }
+    .menu-description {
+        padding: 0 10%;
+        color: black;
+        font-size: 16px;
+        text-align: center;
+        letter-spacing: 2px;
+        line-height: 24px;
+    }
+    .menu-title {
+        font-family: cheap-pine-sans, sans-serif;
+        text-transform: none;
+        font-weight: 400;
+        font-style: normal;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 36px;
+        padding-bottom: 0px;
+        letter-spacing: 1px;
+        color: black;
+    }
+    .order-form {
+        padding: 10px;
+    }
+    .page-body {
+        background-image: url("{% static 'img/bird2.webp' %}");
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    .section-card {
+        padding: 1% 1%;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.637);
+        box-shadow: 0px 1px 20px -5px rgba(74,74,74,0.29);
+        -webkit-box-shadow: 0px 1px 20px -5px rgba(74,74,74,0.29);
+        -moz-box-shadow: 0px 1px 20px -5px rgba(74,74,74,0.29);
+        margin: 10px 6%;
+    }
+    .section-title {
+        text-align: center;
+        width: 100%;
+        font-size: 28px;
+        margin-bottom: 5px;
+        font-family: 'cheap-pine-sans', sans-serif;
+        text-transform: none;
+        font-weight: 400;
+        font-style: normal;
+        color: rgb(234, 72, 3);
+        border-top: none;
+        border-bottom: none
+    }
+    .swal2-html-container {
+        margin: 0;
+    }
+    .swal2-html-container .change-side {
+        letter-spacing: 1px;
+        font-size: 14px;
+    }
+    .change-side:focus-visible {
+        outline: none !important
+    }
+    .swal2-html-container .form-check {
+        text-align: left !important;
+    }
+    .swal2-html-container .div-mini-dotted {
+        border-bottom: dotted 3px rgba(186, 186, 186, 0.76) !important;
+        margin: 20px 0px 10px 0px !important;
+    }
+    .swal2-html-container .divider {
+        width: 100%;
+        border-bottom: solid 2px rgba(186, 186, 186, 0.76);
+        margin: 10px 0px;
+    }
+    .swal2-html-container fieldset {
+        background:rgba(235, 235, 235, 0.639);
+        border-radius: 30px;
+        margin: 20px 0px;
+        padding: 10px 30px;
+        box-shadow: 0px 1px 10px -5px rgba(74,74,74,0.29);
+        -webkit-box-shadow: 0px 1px 10px -5px rgba(74,74,74,0.29);
+        -moz-box-shadow: 0px 1px 10px -5px rgba(74,74,74,0.29);
+        
+    }
+    .swal2-html-container h4 {
+        color:rgb(255, 87, 53);
+        margin-bottom: 0;
+        margin-top: 0;
+        text-align: center;
+        padding: 0;
+    }
+    .swal2-html-container h5 {
+        color: rgb(30, 30, 30);
+        width: 100%;
+        font-size: 18px;
+    }
+    .swal2-html-container h6 {
+        color:rgb(70, 70, 226);
+        font-size: 20px;
+    }
+    .swal2-popup {
+        width: 95%;
+        border-radius: 25px;
+        padding: 10px 5px;
+        max-height: 85%;
+        overflow-y: scroll
+    }
+    .swal2-container {
+        padding: 0;
+        max-height: 100%;
+    }
+    .title-icon {
+        width: 50px; 
+        margin-right: 10px;
+    }
+    .form-outline .form-control {
+        background: white !important;
+        border-radius: 15px;
+
+    }
+    @media only screen and (min-width: 601px){
+        .item-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        .item-description {
+            font-size: 18px;
+            line-height: 22px;
+        }
+        .item-line {
+            padding: 12px;
+        }
+        .item-price {
+            font-size: 22px;
+            min-width:90px;
+        }
+        .item-price.header {
+            font-size: 20px;
+            line-height: 24px;
+        }
+        .menu-title {
+            font-size: 54px;
+            padding-bottom: 0px;
+            letter-spacing: 2px;
+            padding-top: 10px;
+        }
+        .section-card {
+            padding: 1% 3%;
+            margin: 20px 10%;
+            border-radius: 40px;
+        }
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        .swal2-html-container h5 {
+            width: 100%;
+        }
+        .swal2-html-container h6 {
+            font-size: 20px;
+        }
+        .swal2-popup {
+            width: 70%;
+            border-radius: 25px;
+            padding: 20px 50px;
+            max-height: 85%;
+        }
+    }
+    @media only screen and (min-width: 992px){
+        .item-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        .item-description {
+            font-size: 18px;
+            line-height: 22px;
+        }
+        .item-line {
+            padding: 12px;
+        }
+        .item-price {
+            font-size: 24px;
+        }
+        .menu-description {
+            padding: 0 10%;
+            color: black;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 2px;
+            line-height: 38px;
+        }
+        .menu-title {
+            font-size: 54px;
+            padding-bottom: 0px;
+            letter-spacing: 2px;
+        }
+        .section-card {
+            padding: 1% 3%;
+            margin: 20px 10%;
+            border-radius: 40px;
+        }
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        .swal2-html-container h5 {
+            width: 100%;
+        }
+        .swal2-html-container h6 {
+            font-size: 20px;
+        }
+        .swal2-popup {
+            width: 70%;
+            border-radius: 25px;
+            padding: 20px 50px;
+            max-height: 85%;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="page">
+    <img width="100%" src="{% static 'img/fof.jpg' %}">
+</div>
+<style>
+    #page {
+        background-color: black;
+        width: 100%;
+        height: fit-content;
+    }
+</style>
+{% endblock %}

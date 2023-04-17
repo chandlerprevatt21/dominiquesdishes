@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-body">
+    <div class="page-container text-center">
+        <h1>Catering</h1>
+        <h5>
+            Dominique’s Dishes provides classic catering for all settings: banquets, BBQ’s, bridal showers, baby showers, birthday parties, and more! Celebrating a milestone? Dominique’s Dishes has you covered while creating food from the Soul. You’ll be in Soulful bliss that satisfies your appetite.
+        </h5>
+        <p>
+            Dominique’s Dishes will prepare a gourmet experience that includes set up at your location (disposable utensils, plates & napkins available upon request).
+        </p>
+        <div class="center-align">
+            <div class="div-mini-dotted" style="margin-top: 5px"></div>
+        </div>
+        <h5 style="font-style: italic">
+            Pricing starts at $500 for up to 50 guests plus the cost of food, service charges, and sales tax
+        </h5>
+        <div class="divider light w100"></div>
+        <div class="row">
+            <div class="col-6 col-md-4 offset-md-2" style="padding: 10px;">
+                <a href="{{ catering_request_url }}"><img class="w100 shadow-3-strong thumbnail-link" src="{% static 'img/request-quote.jpg' %}" width="100%"></a>
+            </div>
+            <div class="col-6 col-md-4 offset-md-0" style="padding: 10px;">
+                <a href="/catering/menu/"><img class="w100 shadow-3-strong thumbnail-link" src="{% static 'img/view-menu.jpg' %}"></a>
+            </div>
+        </div>
+        <div class="divider light w100"></div>
+        <h3>Explore More Services</h3>
+        <div class="center-align">
+            <div class="div-mini-dotted"></div>
+        </div>
+        <ul>
+            {% for service in services %}
+            <li><a href="{{ service.get_absolute_url }}" style="font-weight: 600">{{ service }}</a></li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+<style>
+    h1 {
+        text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.269);
+    }
+    h5 {
+        padding: 5px 0px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+    .page-body {
+        background: url('{% static "img/bird1.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    .page-container {
+        padding: 140px 5% 40px 5%;
+        background: rgb(239,251,255);
+        background: linear-gradient(180deg, rgba(239,251,255,0.38561362044817926) 0%, rgba(215,245,254,0.9402354691876751) 13%, rgba(169,223,246,0.9206276260504201) 53%, rgba(186,220,255,0.9766500350140056) 100%);
+    }
+    .page-container p {
+        font-size: 16px;
+    }
+    .thumbnail-link {
+        transition: all 0.3s ease-in-out;
+    }
+    .thumbnail-link:hover {
+        transform: scale(1.05)
+    }
+    @media only screen and (min-width: 901px){
+        .page-body {
+            background-size: 40%;
+        }
+        .page-container {
+            padding: 140px 20% 40px 20%;
+        }
+        .page-container p {
+            font-size: 20px;
+        }
+            h5 {
+            padding: 5px 0px;
+            font-size: 22px;
+            line-height: 32px;
+        }
+    }
+</style>
+{% endblock %}

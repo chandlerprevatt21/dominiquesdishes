@@ -1,0 +1,118 @@
+{% load static %}
+
+<!-- JQuery -->
+<script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<!-- Carousel -->
+<script src="{% static 'js/bootstrap-swipe-carousel.min.js' %}"></script>
+
+<!-- Justified Gallery -->
+<script src="{% static 'js/jquery.justifiedGallery.min.js' %}"></script>
+
+<!-- Mask -->
+<script src="{% static 'js/jquery.mask.min.js' %}"></script>
+
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+></script>
+
+<!-- Owl Carousel -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!-- Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="{% static 'js/sweetalert2@11' %}"></script>
+
+<!-- Swipebox -->
+<script src="{% static 'js/jquery.swipebox.min.js' %}"></script>
+
+<!-- Validate -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#to-top').on('click', function(){
+            window.scrollTo(0, 0);
+        })
+        $('.phone_us').mask('(000) 000-0000');
+        $('.dropdown-toggle').on('click', function(){
+            $(this).siblings().toggle(300)
+        });
+        $('.hamburger').on('click', function(){
+            $(this).toggleClass('is-active')
+            $('#sidenav').toggleClass('active')
+            $('#sidenav-overlay').toggleClass('active')
+        });
+        $('#sidenav-overlay').on('click', function(){
+            if($('#sidenav').hasClass('active')){
+                $('#sidenav').removeClass('active')
+                $('#sidenav-overlay').removeClass('active')
+                $('.hamburger').removeClass('is-active')
+            }
+        });
+        $('input').on('keyup', function(){
+            if($(this).val() != ''){
+                $(this).addClass('active')
+                $(this).siblings('label').addClass('active')
+            }else{
+                $(this).removeClass('active')
+                $(this).siblings('label').removeClass('active')
+            }
+        });
+        $('textarea').on('keyup', function(){
+            if($(this).val() != ''){
+                $(this).addClass('active')
+                $(this).siblings('label').addClass('active')
+            }else{
+                $(this).removeClass('active')
+                $(this).siblings('label').removeClass('active')
+            }
+        });
+        $('.home-carousel').carousel().swipeCarousel({
+        });
+        $(document).on('click', '#close-cart', function(){
+            $('#cart-container').hide(300);
+        });
+        $(document).on('click', '#back-to-cart', function(){
+            window.location.replace('/menus/')
+        })
+        $('#show-cart').on('click', function(){
+            $('#cart-container').toggle(300);
+        });
+        $('#content-body').on('click', function(){
+            $('#cart-container').hide(300);
+        });
+        $(document).on('click', '.remove', function(){
+            var pk = $(this).attr('itemID')
+            var data = {
+                'pk': pk,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            }
+            $.ajax({
+                data: data,
+                url: '/cart/remove-menu-item/',
+                method: 'POST',
+            }).done(function( response ){
+                if(response[0].status == 'success'){
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Item Removed from Order!'
+                    })
+                    $('#cart-container').html(response[0].cart);
+                    $('#cart-container').show(300);
+                    $('#cart-counter').html(response[0].cartCounter);
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        text: String(response[0].message)
+                    })
+                }
+            })
+        });
+    });
+</script>

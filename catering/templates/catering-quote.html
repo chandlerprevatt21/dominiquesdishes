@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-body text-center">
+    <div class="page-container">
+        <h1>Catering Request</h1>
+        <div class="center-align">
+            <div class="div-mini-dotted" style="margin-top: 5px"></div>
+        </div>
+        <form id="catering-request-form" action="/catering/request/" method="POST">
+            {% csrf_token %}
+            <div class="card">
+                <div id="step-1" class="row">
+                    <div class="divider light w100" style="margin-top: 0px; margin-bottom: 10px;"></div>
+                    <h5>Contact Details</h5>
+                    <div class="divider light w100" style="margin-top: 5px; margin-bottom: 20px;"></div>
+                    <div class="col-6">
+                        <div class="form-outline">
+                            <input type="text" id="first-name" class="form-control form-control-lg" name="first-name" required/>
+                            <label class="form-label" for="first-name">First Name<b class="required">*</b></label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-outline">
+                            <input type="text" id="last-name" class="form-control form-control-lg" name="last-name" required/>
+                            <label class="form-label" for="last-name">Last Name<b class="required">*</b></label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <div class="form-outline">
+                            <input type="email" id="email" class="form-control form-control-lg" name="email" required/>
+                            <label class="form-label" for="email">Email<b class="required">*</b></label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <div class="form-outline">
+                            <input type="text" id="phone" class="form-control form-control-lg phone_us" name="phone"/>
+                            <label class="form-label" for="phone">Phone</label>
+                        </div>
+                    </div>
+                    <div class="divider light w100" style="margin-top: 30px; margin-bottom: 10px;"></div>
+                    <h5>Event Details</h5>
+                    <div class="divider light w100" style="margin-top: 5px; margin-bottom: 5px;"></div>
+                    
+                    <div class="col-12">
+                        <div class="form-outline">
+                            <input type="date" class="form-control form-control-lg" name="event-date" id="event-date">
+                            <label class="form-label active" for="event-date" style="height: fit-content;padding-top: 5px; margin-top: 5px;">Event Date &nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-outline">
+                            <input type="time" class="form-control form-control-lg" name="event-time" id="event-time">
+                            <label class="form-label active" for="event-time" style="height: fit-content;padding-top: 5px; margin-top: 5px;">Event Time</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-outline">
+                            <textarea class="form-control form-control-lg" name="event-location" id="event-location" rows="1"></textarea>
+                            <label class="form-label" for="event-location">Event Location</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-outline">
+                            <input type="number" id="party-size" name="party-size" class="form-control form-control-lg" required/>
+                            <label class="form-label" for="party-size"># of Guests</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="form-outline">
+                            <textarea class="form-control form-control-lg" name="allergies" id="allergies" rows="1"></textarea>
+                            <label class="form-label" for="allergies">Allergies/Dietary Restrictions</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <p>Is onsite cooking allowed at the venue?</p>
+                    </div>
+                    <div class="center-align">
+                        <div class="form-check center-align" style="margin-right: 20px;">
+                            <input class="form-check-input" type="radio" name="onsite-cooking" id="cooking-allowed" value="Yes">
+                            <label class="form-check-label" for="cooking-allowed">Yes</label>
+                        </div>
+                        <div class="form-check center-align">
+                            <input class="form-check-input" type="radio" name="onsite-cooking" id="cooking-forbidden" value="No">
+                            <label class="form-check-label" for="cooking-forbidden">No</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-outline">
+                            <textarea class="form-control form-control-lg" name="services-needed" id="services-needed" rows="2"></textarea>
+                            <label class="form-label" for="services-needed">Serivces Needed</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-outline">
+                            <textarea class="form-control form-control-lg" name="equipment-needed" id="equipment-needed" rows="2"></textarea>
+                            <label class="form-label" for="equipment-needed">Equiment Needed</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-outline">
+                            <textarea class="form-control form-control-lg" name="special-instructions" id="special-requests" rows="2"></textarea>
+                            <label class="form-label" for="special-requests">Special Requests</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <p class="menu-link"><a href="/catering/menu/" target="_blank"><i class="bi bi-book-half"></i> Click to explore the catering menu</a></p>
+                        <div class="form-outline">
+                            <textarea class="form-control form-control-lg" name="menu-items" id="menu-items" rows="2"></textarea>
+                            <label class="form-label" for="menu-items">Menu Items Requested</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-md-6 col-lg-4 offset-md-3 offset-lg-4">
+                        <button class="g-recaptcha btn" 
+                        data-sitekey="{{ recaptcha_site_key }}" 
+                        data-callback='onSubmit' 
+                        data-action='submit'>Submit <i class="bi bi-send"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .menu-link {
+        font-size: 16px;
+    }
+    .back-to-menu {
+        margin-left: 2%;
+        padding-bottom: 20px !important;
+        color: rgb(26, 26, 26);
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-size: 12px;
+        transition: all 0.4s ease-in-out;
+    }
+    .back-to-menu:hover {
+        color:rgb(61, 210, 255)
+    }
+    form .card {
+        padding: 25px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.979);
+    }
+    form label {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .form-outline {
+        border: 1px solid rgba(213, 213, 213, 0.859);
+        border-radius: 30px;
+    }
+    .form-control.form-control-lg {
+        border-radius: 30px;
+    }
+    form label.active {
+        background: rgba(255, 255, 255, 0.979);
+    }
+    form .col-6,.col-12 {
+        padding: 5px;
+        margin-top: 10px;
+    }
+    h1 {
+        text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.269);
+    }
+    h5 {
+        padding: 5px 0px;
+    }
+    .page-body {
+        background: url('{% static "img/bird2.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    .page-container {
+        padding: 140px 5% 40px 5%;
+        background: rgb(239,251,255);
+        background: linear-gradient(180deg, rgba(239,251,255,0.38561362044817926) 0%, rgba(215,245,254,0.9402354691876751) 13%, rgba(169,223,246,0.9206276260504201) 53%, rgba(186,220,255,0.9766500350140056) 100%);
+    }
+    .thumbnail-link {
+        transition: all 0.3s ease-in-out;
+    }
+    .thumbnail-link:hover {
+        transform: scale(1.05)
+    }
+    @media only screen and (min-width: 901px){
+        .page-body {
+            background-size: 40%;
+        }
+        .page-container {
+            padding: 140px 20% 40px 20%;
+        }
+    }
+</style>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+    function onSubmit(token) {
+        if($('#first-name').val()==''){
+            Swal.fire('Required Field Missing', 'First name is required', 'error')
+        }else if($('#last-name').val()==''){
+            Swal.fire('Required Field Missing', 'Last name is required', 'error')
+        }else if($('#email').val()==''){
+            Swal.fire('Required Field Missing', 'Email is required', 'error')
+        }else{
+            document.getElementById("catering-request-form").submit();
+        }
+    }
+</script>
+{% endblock %}

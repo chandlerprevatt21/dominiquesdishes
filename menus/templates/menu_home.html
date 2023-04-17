@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-body">
+    <div class="page-container">
+        <div class="row active-menus text-center">
+        <div class="col-12">
+            <h1>Current Offerings</h1>
+            <div style="width: 100%; display: flex; justify-content: center">
+                <div class="div-mini-dotted"></div>
+            </div>
+        </div>
+        {% for menu in menus %}
+        <div class="col-8 offset-2 col-md-4 offset-md-0">
+            <div class="menu-card card">
+                <a href="{{ menu.get_absolute_url }}">
+                    
+                    {% if menu.thumbnail %}
+                    <img src="{{ menu.thumbnail.url }}" class="card-img-top" alt="{{ menu.title }}"/>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <a href="{{ menu.get_absolute_url }}" class="btn menu-view-btn shadow-2">Explore & Order</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        <div class="row inactive-menus text-center">
+            <div style="width: 100%; display: flex; justify-content: center">
+                <div class="div-mini-dotted"></div>
+            </div>
+            <h3>Browse Past Menus</h3>
+            <div style="width: 100%; display: flex; justify-content: center">
+                <div class="div-mini-dotted"></div>
+            </div>
+        {% for menu in archived %}
+        <div class="col-8 offset-2 col-md-4 offset-md-0">
+            <div class="menu-card card">
+                <a href="{{ menu.get_absolute_url }}">
+                    {% if menu.thumbnail %}
+                    <img src="{{ menu.thumbnail.url }}" class="card-img-top" alt="{{ menu.title }}"/>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <a href="{{ menu.get_absolute_url }}" class="btn menu-view-btn shadow-2">Explore</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+    .active-menus {
+        padding: 0px 1%;
+    }
+    .inactive-menus {
+        padding: 20px 1%;
+    }
+    .card-body {
+        padding: 15px 10px;
+    }
+    .card-body .btn {
+        border-radius: 60px;
+        padding: 5px 10px;
+        border: 1px solid #f2f2f2;
+        font-weight: 600;
+        letter-spacing: 2px;
+        font-size: 12px;
+        margin: 0px;
+        box-shadow: 0px 1px 10px 0px rgba(23, 23, 23, 0.09);
+        -webkit-box-shadow: 0px 1px 10px 0px rgba(23, 23, 23, 0.09);
+        -moz-box-shadow: 0px 1px 10px 0px rgba(23, 23, 23, 0.09);
+    }
+    .card-body .btn:hover {
+        color: rgb(249, 61, 23);
+        box-shadow: 0px 1px 10px 0px rgba(33, 33, 33, 0.2) !important;
+        -webkit-box-shadow: 0px 1px 10px 0px rgba(33, 33, 33, 0.2) !important;
+        -moz-box-shadow: 0px 1px 10px 0px rgba(33, 33, 33, 0.2) !important;
+    }
+    .card-img-top {
+        border-top-left-radius: 20px !important;
+        border-top-right-radius: 20px !important;
+    }
+    h1 {
+        color:rgb(25, 130, 72);
+        text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.269);
+    }
+    .menu-card.card {
+        border-radius: 20px;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 10px;
+    }
+    .page-body {
+        background: url('{% static "img/bird2.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    .page-container {
+        padding-top: 120px;
+        padding-bottom: 40px;
+        background: rgb(239,251,255);
+        background: linear-gradient(180deg, rgba(239,251,255,0.38561362044817926) 0%, rgba(215,245,254,0.9402354691876751) 13%, rgba(169,223,246,0.9206276260504201) 53%, rgba(186,220,255,0.9766500350140056) 100%);
+    }
+    @media only screen and (min-width: 601px){
+        .card-body .btn {
+            padding: 10px 15px;
+            letter-spacing: 3px;
+            font-size: 14px;
+        }
+
+    }
+    @media only screen and (min-width: 992px){
+        .active-menus {
+            padding: 0px 12%;
+        }
+        .inactive-menus {
+            padding: 0px 12%;
+        }
+        .page-body {
+            background-size: 50%;
+        }
+        .page-container {
+            padding-top: 160px;
+            padding-bottom: 60px;
+        }
+    }
+</style>
+{% endblock %}

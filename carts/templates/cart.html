@@ -1,0 +1,65 @@
+<div class="row cart-row">
+    <div class="col-12 card" id="cart-body">
+        <i class="bi bi-x-lg" id="close-cart"></i>
+        <h2 class="cart-title text-center">Your Order</h2>
+        <div style="height: 55vh; overflow-y: scroll">
+            {% if cart.items.all|length > 0 %}
+            <table>
+                <thead>
+                    <tr>
+                        <td>Item</td>
+                        <td style="text-align:right">Price</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.items.all %}
+                    <tr>
+                        <td class="item-cell"><div class="cart-item-title">{{ forloop.counter }}. {{ item }}</div>
+                            {% if item.sides|length > 0 %}
+                            <div class="side-list">
+                                <h6>Sides</h6>
+                                <p><i>{{ item.sides }}</i></p>
+                            </div>
+                            {% endif %}
+                            {% if item.beverages|length > 0 %}
+                            <div class="side-list">
+                                <h6>Beverages</h6>
+                                <p><i>{{ item.beverages }}</i></p>
+                            </div>
+                            {% endif %}
+                            {% if item.notes|length > 0 %}
+                            <div class="side-list">
+                                <h6>Notes</h6>
+                                <p><i>{{ item.notes }}</i></p>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="cart-item-price">${{ item.price }}</td>
+                        <td class="text-right remove" itemId="{{ item.pk }}">
+                            <i class="bi bi-x-circle remove-icon"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0px 5px 5px; border-bottom: dotted 2px rgba(128, 128, 128, 0.21)">
+                <div class="cart-tax-title">Subtotal</div>
+                <div class="cart-item-price final-price" style="padding-right: 36px; font-weight: 400">${{ cart.get_subtotal }}</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0px 5px 5px; border-bottom: dotted 2px rgba(128, 128, 128, 0.21)">
+                <div class="cart-tax-title">Tax</div>
+                <div class="cart-item-price final-price" style="padding-right: 36px; font-weight: 400">${{ cart.get_tax }}</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 5px 0px 5px 5px; border-bottom: dotted 2px rgba(128, 128, 128, 0.21)">
+                <div class="cart-tax-title">Total</div>
+                <div class="cart-item-price final-price" style="padding-right: 36px; font-weight: 800">${{ cart.get_total }}</div>
+            </div>
+            {% else %}
+            <p style="text-align: center">Hungry yet? <a href="/menus">Order now</a></p>
+            {% endif %}
+        </div>
+        <a class="checkout-btn btn {% if cart.items.all|length == 0 %}disabled{% endif %}" href="/cart/checkout/"><i class="bi bi-arrow-right-circle-fill"></i> Order Now</a>
+    </div>
+</div>

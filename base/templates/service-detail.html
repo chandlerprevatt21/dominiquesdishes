@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-body">
+    <div class="row" id="content-row">
+        <div class="col-12 text-center">
+            <h1>{{ service.title }}</h1>
+        </div>
+        <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+            
+            <div class="col-12 center-align">
+                <div class="div-mini-dotted green"></div>
+            </div>
+            <h3 style="color: rgb(32, 102, 224)">Dominique's Dishes</h3>
+            <div class="col-12 center-align">
+                <div class="div-mini-dotted white"></div>
+            </div>
+            {{ service.description|safe }}
+            <div class="col-12" style="padding: 30px 0px 10px 0px;">
+                <a href="{{ contact_url }}" class="outline-btn dark fade-in2">Get In Touch</a>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #content-row ul li {
+        list-style:square;
+        list-style-position: inside;
+        letter-spacing: 1px;
+        font-size: 18px;
+        text-align: left;
+    }
+    #content-row .card {
+        padding: 2.5% 5%;
+    }
+    h1 {
+        text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.269);
+    }
+    #content-row {
+        background: rgb(191,240,255);
+        background: linear-gradient(180deg, rgba(115, 220, 252, 0.801) 0%, rgba(167, 231, 251, 0.956) 10%, rgba(187, 233, 247, 0.976) 53%, rgba(246, 246, 246, 0.926) 100%);
+        padding: 140px 5% 60px 5%;;
+    }
+    #content-row h3 {
+        font-size: 20px;
+        letter-spacing: 4px;
+    }
+    #content-row h3.script {
+        text-transform: none;
+        letter-spacing: 3px;
+        font-size: 46px;
+    }
+    #content-row span {
+        font-weight: 500;
+        text-align: left;
+        font-size: 16px;
+        line-height:22px;
+    }
+    #content-row li {
+        list-style-position: inside;
+    }
+    .page-body {
+        background: url('{% static "img/bird1.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    p.bluejay {
+        text-transform: capitalize;
+        font-size: 22px;
+        letter-spacing: 3px;
+        font-weight: 800;
+    }
+    @media only screen and (min-width: 601px){
+        .page-body {
+            background-size: 50%;
+        }
+        #content-row span{
+            font-size: 16px;
+            line-height:24px;
+        }
+    }
+    @media only screen and (min-width: 992px){
+        #content-row {
+            padding: 160px 5% 80px 5%;
+        }
+        #content-row span {
+            text-align: center;
+            font-size: 18px;
+            line-height:26px;
+            letter-spacing: 1px;
+        }
+        #content-row h3.script {
+            letter-spacing: 3px;
+            font-size: 52px;
+        }
+        .page-body {
+            background-size: 40%;
+        }
+    }
+</style>
+{% endblock %}

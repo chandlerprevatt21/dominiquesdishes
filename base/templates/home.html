@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="jumbotron shadow-3-strong">
+    <div id="carouselIndicators" class="carousel slide home-carousel" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active" id="item-1">
+                <div class="home-slide" id="home-slide-1">
+                    <div class="row text-center">
+                        <div class="col-12" style="display: flex; align-items: center; justify-content: center">
+                            
+                            <div>
+                                <h1 class="noselect tracking-in-contract">Dominique's</h1>
+                                <h1 class="noselect tracking-in-contract">Dishes</h1>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center center-align">
+                            <h4 class="noselect fade-in">- Creating food from the soul -</h4>
+                        </div>
+                        <div class="col-12">
+                            <a href="{{ menus_url }}" class="outline-btn fade-in2">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item" id="item-2">
+                <div class="home-slide" id="home-slide-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <img class="tracking-in-contract" src="{% static 'img/logo.png' %}" style="width: 120px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item" id="item-3">
+                <div class="home-slide" id="home-slide-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <img class="tracking-in-contract" src="{% static 'img/logo.png' %}" style="width: 120px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row shadow-3-strong" id="section-2">
+    <div id="section-2-overlay">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+                    <div class="row text-center">
+                        <h3 class="noselect">Meet The Chef</h3>
+                        <div class="center-align" style="width: 100%">
+                            <div class="divider"></div>
+                        </div>
+                        <div class="col-6" style="padding-right: 5px">
+                            <a href="/story/"><img src="{% static 'img/cf2.png' %}" width="100%"></a>
+                        </div>
+                        <div class="col-6" style="padding-left: 5px">
+                            <a href="/story/"><img src="{% static 'img/cf1.png' %}" width="100%"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-center">
+                            <div class="center-align" style="width: 100%">
+                                <div class="divider"></div>
+                            </div>
+                            <p class="noselect mb-0"><b>"A Jersey Girl with a Southern Flair"</b></p>
+                            <p class="script noselect" style="margin-bottom: 0">Carolyn Murphy</p>
+                            <div class="center-align" style="width: 100%">
+                                <div class="div-mini-dotted green mt-0"></div>
+                            </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-center">Chef Carolyn Kyra “Dominique” Murphy started Dominique’s Dishes in 2012 while traveling around the world. She would always take delight in the food wherever she was. Chef Carolyn has been working in the kitchen with her grandparents, parents and other relatives and community.</p>
+                    <p class="text-center">She loves to ask questions and wonders "why?" With such curiosity, she saw different cultures and they always brought her right back to her own. Whether cooking for community leaders, church events, officiants, basketball teams, weddings, and more, chef Carolyn is always cooking from her soul.</p>
+                </div>
+                <div class="col-12 text-center">
+                    <p class="center-align text-center mb-0">
+                        <b>Find me @dominiquesdishes!</b>
+                    </p>
+                    <p class="center-align">
+                        <a href="https://www.facebook.com/profile.php?id=100069985220005" target="_blank"><i class="bi bi-facebook facebook-btn"></i></a>
+                        <a href="https://www.instagram.com/dominiquesdishes/" target="_blank"><i class="bi bi-instagram ig-btn"></i></a>
+                        <a href="https://www.yelp.com/biz/dominiques-dishes-wharton?utm_campaign=www_business_share_popup&utm_medium=copy_link&utm_source=(direct)" target="_blank"><i class="bi bi-yelp yelp-btn"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row shadow-3-strong" id="section-3">
+    <div id="section-3-overlay">
+        <h3 class="noselect">Services</h3>
+        <div class="col-12">
+            <ul style="display: flex; align-items:center; flex-direction: column">
+                <li><div class="divider"></div></li>
+                {% for service in services %}
+                <a href="{{ service.get_absolute_url }}"><li>{{ service }}</li></a>
+                <li><div class="div-mini-dotted"></div></li>
+                {% endfor %}
+                <li>& More!</li>
+                <div class="col-12" style="padding: 30px 0px 10px 0px;">
+                    <a href="{{ menus_url }}" class="outline-btn dark fade-in2">Order Now</a>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+<style>
+    #item-1 {
+        background-image: url("https://pub-15dfa537641e4230b0972803176c97a9.r2.dev/ddstatic/img/dd-home-final.gif");
+        background-attachment: fixed;
+        background-position-y: 0px;
+        background-size:cover
+    }
+    #home-slide-1 {
+        background: rgba(50, 50, 50, 0.241);
+        padding: 100px 0px 40px 0px;
+    }
+    #section-2 {
+        background: url("{% static 'img/bird4.webp' %}");
+        background-size: 40%;
+        z-index: 6;
+        position: relative;
+        padding: 0 !important;
+    }
+    #section-2-overlay {
+        background: rgba(255, 247, 243, 0.9);
+        padding: 5% 8%;
+        width: 100%;
+        height: 100%
+    }
+    #section-3 {
+        background: url('{% static "img/bird3.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    #section-3-overlay {
+        background: rgba(66, 92, 66, 0.92);
+        color: white;
+        padding: 8% 5% 6% 5%;
+        text-align: center;
+        position: relative
+    }
+    #section-3 a {
+        color: white;
+        transition: all 0.6s ease-in-out;
+    }
+    #section-3 a:hover {
+        color: rgb(10, 222, 225);
+    }
+    #section-3 h3 {
+        color: white
+    }
+    #section-4 {
+        background: rgb(195, 210, 195);
+        color: white;
+        padding: 8% 5% 6% 5%;
+        text-align: center
+    }
+    @media only screen and (min-width: 992px){
+        #home-slide-1 {
+            padding: 150px 0px 80px 0px;
+        }
+        #home-slide-1 h4 {
+            margin: 30px 0px 60px 0px;
+        }
+        #item-1 {
+            background-position-y: 0px;
+            background-position-y: -500px;
+        }
+        #section-2 {
+            padding: 3% 5% 2% 5%;
+        }
+        #section-3 {
+            background-size: 40%
+        }
+    }
+</style>
+{% endblock %}

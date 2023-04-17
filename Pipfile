@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+stripe = "*"
+squareup = "*"
+django-ckeditor = "*"
+sweetify = "*"
+django-storages = "*"
+boto3 = "*"
+whitenoise = "*"
+django-environ = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
+pillow = "*"
+requests = "*"
+django = "*"
+psycopg2 = "*"
+gunicorn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

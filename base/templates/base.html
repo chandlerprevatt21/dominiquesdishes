@@ -1,0 +1,167 @@
+{% load static %}
+{% url 'carts:checkout' as checkout_url %}
+{% url 'catering:home' as catering_url %}
+{% url 'catering:request' as catering_request_url %}
+{% url 'contact' as contact_url %}
+{% url 'home' as home_url %}
+{% url 'gallery' as gallery_url %}
+{% url 'story' as story_url %}
+{% url 'menus:home' as menus_url %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+        <title>{{ title }}</title>
+        <meta name="description" content="{{ seo_description }}" />
+        {% include 'css.html' %}
+        {% include 'js.html' %}
+        {% block extra_js %}{% endblock %}
+    </head>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="d-flex justify-content-between">
+                <button class="hamburger hamburger--vortex sidenav-open d-lg-none" id="sidenav-toggle" type="button">
+                    <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+                <div class="brand">
+                    <a href="/">
+                        <img src="{% static 'img/logo-h-newfont.png' %}" style="width: 100%;">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+                        <li class="nav-item cl-effect-17 tracking-in-contract">
+                            <a class="nav-link {% if request.path == home_url %}active{% endif %}" href="{{ home_url }}" data-hover="Home">Home</a>
+                        </li>
+                        <li class="nav-item cl-effect-17 tracking-in-contract2">
+                            <a class="nav-link {% if request.path == story_url %}active{% endif %}" href="{{ story_url }}" data-hover="Story">Story</a>
+                        </li>
+                        <li class="nav-item cl-effect-17 tracking-in-contract3">
+                            <a class="nav-link {% if request.path == gallery_url %}active{% endif %}" href="{{ gallery_url }}" data-hover="Gallery">Gallery</a>
+                        </li>
+                        <li class="nav-item cl-effect-17 tracking-in-contract4">
+                            <a class="nav-link {% if request.path == menus_url %}active{% endif %}" href="{{ menus_url }}" data-hover="Menus">Menus</a>
+                        </li>
+                        <li class="nav-item cl-effect-17 tracking-in-contract4">
+                            <a class="nav-link {% if request.path == catering_url %}active{% endif %}" href="{{ catering_url }}" data-hover="Catering">Catering</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" id="dropdownMenuPillars" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuPillars">
+                                {% for service in services %}
+                                <li><a class="dropdown-item" href="{{ service.get_absolute_url }}">{{ service.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="nav-item cl-effect-17 tracking-in-contract6">
+                            <a class="nav-link" href="{{ contact_url }}" data-hover="Contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-cart" id="{% if request.path != checkout_url %}show-cart{% else %}back-to-cart{% endif %}">
+                    <i class="bi bi-bag"></i>
+                    <div id="cart-counter">{{ cart_count }}</div>
+                </div>
+            </div>
+        </nav>
+        <div id="brush-container">
+            <img src="{% static 'img/nav-shad.png' %}">
+        </div>
+        <div id="sidenav">
+            <div id="sidenav-container">
+                <div id="sidenav-header"></div>
+                <div id="sidenav-body">
+                    <ul>
+                        <a href="{{ home_url }}"><li>Home</li></a>
+                        <a href="{{ story_url }}"><li>Story</li></a>
+                        <a href="{{ menus_url }}"><li>Order Online</li></a>
+                        <a href="{{ catering_url }}"><li>Catering</li></a>
+                        <a href="{{ menus_url }}"><li>Menus</li></a>
+                        <a href="{{ gallery_url }}"><li>Gallery</li></a>
+                        <a href="{{ contact_url }}"><li>Contact</li></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="sidenav-overlay"></div>
+    </header>
+    <body>
+        
+        <div id="content-body">
+            {% block content %}
+            {% endblock %}
+            
+        </div>
+        <div class="hidden" id="cart-container">
+            {{ cart }}
+        </div>
+        <div id="to-top">
+            <i class="bi bi-arrow-up-circle"></i>
+        </div>
+        {% load sweetify %}
+        {% sweetify %}
+        
+    </body>
+    <footer class="text-center text-lg-start bg-dark text-muted">
+       
+        <section>
+            <div class="text-center text-md-start">
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 mx-auto" style="display: flex; justify-content: center">
+                        <a href="{{ home_url }}">
+                            <img src="{% static 'img/logo-h-ko.png' %}" class="logo" style="width: 200px;">
+                        </a>
+                    </div>
+                    <div class="col-12 center-align">
+                        <div class="div-mini-dotted white" style="margin-bottom: 20px;"></div>
+                    </div>
+                    <div class="col-md-3 col-lg-1 col-xl-1 offset-md-4 offset-lg-5">
+                        <p>
+                            <a href="{{ home_url }}" class="text-reset">Home</a>
+                        </p>
+                        <p>
+                            <a href="{{ menus_url }}" class="text-reset">Order</a>
+                        </p>
+                        <p>
+                            <a href="{{ story_url }}" class="text-reset">Story</a>
+                        </p>
+                        
+                    </div>
+                    <div class="col-md-2 col-lg-2" id="footer-col-2">
+                        <p>
+                            <a href="{{ gallery_url }}" class="text-reset">Gallery</a>
+                        </p>
+                    <p>
+                        <a href="{{ menus_url }}" class="text-reset">Menus</a>
+                    </p>
+                    
+                    <p>
+                        <a href="{{ contact_url }}" class="text-reset">Contact</a>
+                    </p>
+                    </div>
+                    <div class="col-12 center-align">
+                        <div class="divider light" style="margin-bottom: 5px; margin-top: 0px;"></div>
+                    </div>
+                    <p class="center-align" style="margin-bottom: 0px;">
+                        <a href="https://www.facebook.com/profile.php?id=100069985220005" target="_blank"><i class="bi bi-facebook facebook-btn"></i></a>
+                        <a href="https://www.instagram.com/dominiquesdishes/" target="_blank"><i class="bi bi-instagram ig-btn"></i></a>
+                        <a href="https://www.yelp.com/biz/dominiques-dishes-wharton?utm_campaign=www_business_share_popup&utm_medium=copy_link&utm_source=(direct)" target="_blank"><i class="bi bi-yelp yelp-btn"></i></a>
+                    </p>
+                    <div class="col-12 center-align">
+                        <div class="divider light" style="margin-bottom: 0px; margin-top: 5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.223);">
+        © {% now 'Y' %} Copyright
+        <a class="text-reset fw-bold">Dominique's Dishes</a>
+        </div>
+    </footer>
+</html>

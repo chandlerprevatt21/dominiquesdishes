@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="page">
+    Uh oh! Something went wrong with your order. Don't worry, your card has not been charged. <a href="/menus/">Click Here</a> to restart your order.
+</div>
+<style>
+    #page {
+        padding: 10% 20%
+    }
+</style>
+{% endblock %}

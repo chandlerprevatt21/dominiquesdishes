@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="page" class="page-body">
+    <div id="content" class="page-container">
+        <div id="gallery">
+            {% for image in photos %}
+                <a href="{{ image.file.url }}" class="swipebox">
+                    <img src="{{ image.file.url }}" alt="{{ image.caption }}">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+    .page-body {
+        background: url('{% static "img/bird2.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    .page-container {
+        padding: 140px 5% 40px 5%;
+        background: rgb(239,251,255);
+        background: linear-gradient(180deg, rgba(239,251,255,0.38561362044817926) 0%, rgba(215,245,254,0.9402354691876751) 13%, rgba(169,223,246,0.9206276260504201) 53%, rgba(186,220,255,0.9766500350140056) 100%);
+    }
+    @media only screen and (min-width: 901px){
+        .page-body {
+            background-size: 40%;
+        }
+        .page-container {
+            padding: 140px 20% 40px 20%;
+        }
+    }
+</style>
+<script>
+    $("#gallery").justifiedGallery({
+        rowHeight: 200,
+        maxRowHeight: null,
+        margins: 3,
+        border: 0,
+        captions: true,
+        randomize: false,
+    }).on('jg.complete jg.resize', function () {
+        var height = parseInt($('#of-gallery').css('height')) + parseInt($('#by-gallery').css('height'))+ 550
+        var contentHeight = height - 200
+        $('#page').css('height', height)
+        $('.content').css('height', contentHeight)
+        $('.swipebox').swipebox({
+            loopAtEnd: true,
+        });
+    });
+</script>
+{% endblock %}

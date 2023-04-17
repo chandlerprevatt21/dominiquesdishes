@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tz %}
+
+{% block content %}
+<div id="page">
+    <div class="row" id="content-row">
+        <div class="col-12 col-md-10 offset-md-1 col-xl-8 offset-xl-2 text-center">
+            <h6>Success!</h6>
+            <p>Thank you! We've received your order. We'll send your receipt to <b>{{ order.customer.email }}</b>.</p>
+            <ul>
+                <li>
+                    <h5>Order Details</h5>
+                    <div class="center-align">
+                        <div class="divider light" style="margin-top: 0; margin-bottom: 5px;"></div>
+                    </div>
+                    <p class="order-timestamp">Order <b>#{{ order.obj_id }}</b> placed {{ order.created }} EST</p>
+                    <div class="card">
+                        <h6 class="small">Pickup Instructions</h6>
+                        <p style="margin-bottom: 5px; letter-spacing: 1px;">Keep an eye on your email! Dominique's Dishes will reach out to you to coordinate pickup. Thank you for supporting Dominique's Dishes!</p>
+                        <a target="_blank" href="https://goo.gl/maps/sdf44QExMgSjRVKB7" style="text-align: center"><p style="font-size: 16px; padding: 0; margin: 0"><i class="bi bi-geo-alt-fill"></i> Pop's Chicken</p></a>
+                        <p class="text-center" style="font-size: 16px; padding:0; margin:0">392 N Main St, Wharton, NJ 07885</p>
+                    </div>
+                    <div class="card">
+                        <table style="margin-top: 10px;">
+                            <thead>
+                                <tr>
+                                    <td>Item</td>
+                                    <td style="text-align: right">Price</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td class="item-cell"><div class="cart-item-title">{{ forloop.counter }}. {{ item }}</div>
+                                        {% if item.sides|length > 0 %}
+                                        <div class="side-list">
+                                            <h6>Sides</h6>
+                                            <p><i>{{ item.sides }}</i></p>
+                                        </div>
+                                        {% endif %}
+                                        {% if item.beverages|length > 0 %}
+                                        <div class="side-list">
+                                            <h6>Beverages</h6>
+                                            <p><i>{{ item.beverages }}</i></p>
+                                        </div>
+                                        {% endif %}
+                                        {% if item.notes|length > 0 %}
+                                        <div class="side-list">
+                                            <h6>Notes</h6>
+                                            <p><i>{{ item.notes }}</i></p>
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="cart-item-price" style="text-align: right">${{ item.price }}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td style="text-align: right">${{ order.subtotal|floatformat:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tax</td>
+                                    <td style="text-align: right">${{ order.tax|floatformat:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b style="font-weight: 700;">Total</b></td>
+                                    <td style="text-align: right"><b style="font-weight: 700;">${{ order.total|floatformat:2 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-transform: capitalize"><b class="card-brand" style="font-weight: 700;color: rgb(25, 169, 25)">Payment:</b> {{ card.card.brand }} {{ card.card.last4 }}</td>
+                                    <td style="text-align: right; font-weight: 700; color: rgb(25, 169, 25)">-${{ order.total|floatformat:2 }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+            <p><b>Still Hungry? <a href="/menus/">Order More!</a></b></p>
+        </div>
+    </div>
+</div>
+<style>
+    #page {
+        background: url('{% static "img/dd-bg1.webp" %}');
+        background-size: cover;
+    }
+    #content-row {
+        padding: 140px 2.5% 60px 2.5%;
+        background: rgba(255, 255, 255, 0.727);
+    }
+    #content-row h5,h6 {
+        font-family: "shelby", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 1px;
+    }
+    #content-row .card {
+        padding: 2% 5% 3% 5%;
+        margin-bottom: 15px;
+    }
+    #content-row h5 {
+        font-size: 32px;
+        margin-bottom: 0;
+    }
+    #content-row h6 {
+        font-size: 48px;
+        color: rgb(236, 61, 22)
+    }
+    #content-row h6.small {
+        font-size: 32px;
+        color: rgb(236, 61, 22);
+        text-decoration: underline;
+    }
+    .order-timestamp {
+        font-size: 14px;
+        letter-spacing: 1px;
+        font-style: italic;
+        font-weight: 400;
+    }
+    table h6 {
+        font-family: neue-kabel, sans-serif;
+        letter-spacing: 2px !important;
+        font-size: 12px !important
+    }
+    table tr {
+        border-bottom: 1px dotted rgb(208, 208, 208);
+    }
+    td {
+        text-align: left;
+    }
+    @media only screen and (min-width: 901px){
+        td {
+            font-size: 18px;
+        }
+        table h6 {
+            letter-spacing: 3px !important;
+            font-size: 16px !important
+        }
+    }
+</style>
+{% endblock %}

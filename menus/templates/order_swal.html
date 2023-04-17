@@ -1,0 +1,74 @@
+{% load static %}
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<form class="order-form">
+    <div style="display: flex; justify-content: center">
+        <h4 class="form-title"><img src="{% static 'img/plate.png' %}" class="title-icon">Build Your Plate</h4>
+    </div>
+    <fieldset class="selected-meal-entree text-center">
+        <h6 class="fieldset-title">1. Your Selected {{ item.type }}</h6>
+        <div class="divider"></div>
+        <h5 class="item-title" name="entree" pk="{{ item.pk }}">${{ item.price }} - {{ item.title }}</h5>
+        {% if item.description %}
+        <p class="item-description">{{ item.description }}</p>
+        <div style="width:100%; display: flex; justify-content: center">
+            <div class="div-mini-dotted"></div>
+        </div>
+        {% endif %}
+    </fieldset>
+    {% if sides|length > 0 %}
+    <fieldset class="side-selection">
+        <h6 class="fieldset-title">2. Select Your Sides</h6>
+        {% if side_limit is not None %}
+        <p><b>Choose up to {{ side_limit }}</b></p>
+        {% endif %}
+        <div class="divider"></div>
+        {% for side in sides %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sides" value="{{ side.pk }}" id="side-option-{{ side.pk }}"/>
+            <label class="form-check-label" for="side-option-{{ side.pk }}">{{ side.title }} - <b>${{ side.price }}</b></label>
+        </div>
+        {% endfor %}
+    </fieldset>
+    <fieldset class="special-requests">
+        <h6 class="fieldset-title">3. Add a Request</h6>
+        <div class="divider"></div>
+        <div class="form-outline">
+            <textarea class="form-control" id="itemRequest" name="request" rows="2"></textarea>
+            <label class="form-label" for="itemRequest">Add a Special Request</label>
+          </div>
+    </fieldset>
+    {% else %}
+    <fieldset class="special-requests">
+        <h6 class="fieldset-title">2. Add a Request</h6>
+        <div class="divider"></div>
+        <div class="form-outline">
+            <textarea class="form-control" id="itemRequest" name="request" rows="2"></textarea>
+            <label class="form-label" for="itemRequest">Add a Special Request</label>
+          </div>
+    </fieldset>
+    {% endif %}
+   
+    <btn class="btn add-to-order" id="add-to-order">Add To Order</btn>
+</form>
+<style>
+    .fieldset-title {
+        text-transform: capitalize;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        var limit = parseInt('{{ menu.max_sides }}');
+        alert(limit)
+        if(limit > 0){
+            $('.form-check-input').on('change', function(evt) {
+            if($(this).siblings(':checked').length >= limit) {
+                this.checked = false;
+            }
+            });
+        }
+        
+    })
+</script>

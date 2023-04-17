@@ -1,0 +1,20 @@
+<div class="row pickup-time-container">
+    {% if times|length > 0 %}
+        {% for x in times %}
+        <div class="col-4 col-md-3 col-lg-2" style="padding-bottom: 5px;">
+            <input class="form-check-input" type="radio" name="pickup-time" id="time-{{ x }}" value="{{ x.pk }}">
+            <label class="form-check-label" for="time-{{ x }}">{{ x.time|date:"f A" }}</label>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div class="w100 text-center">
+    <p>No pickup times available</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .pickup-time-container {
+        padding: 30px 0px 0px 0px;
+    }
+</style>
