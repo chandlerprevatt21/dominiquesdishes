@@ -29,6 +29,9 @@ class Item(models.Model):
     
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['price', 'title']
         
 class Section(models.Model):
     type                = models.CharField(choices=ITEM_TYPE_CHOICES, max_length=64, default='entree')
@@ -61,12 +64,18 @@ class Menu(models.Model):
     background_image    = models.ImageField(blank=True, null=True)
     thumbnail           = models.ImageField(blank=True, null=True)
     max_sides           = models.IntegerField(default=0)
+    position            = models.IntegerField(null=True, blank=True)
+    created             = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated             = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     def __str__(self):
         return self.title
     
     def get_absolute_url(self):
         return reverse('menus:detail', args=[str(self.slug)])
+    
+    class Meta:
+        ordering = ['position']
     
 def menu_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
