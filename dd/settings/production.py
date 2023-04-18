@@ -134,10 +134,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://pub-22ad366cb0cc4fe784b80ee361417b38.r2.dev/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_ROOT = BASE_DIR / "mediafiles"
+MEDIA_ROOT = 'https://pub-22ad366cb0cc4fe784b80ee361417b38.r2.dev/'
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
