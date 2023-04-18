@@ -16,3 +16,19 @@ EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+CAPTCHA = env('CAPTCHA')
+CAPTCHA_SECRET = env('CAPTCHA_SECRET')
+GOOGLE_API_KEY = env('GOOGLE_API_KEY')
+STRIPE_API_KEY = env('STRIPE_API_KEY')
+
+DATABASES = {
+    
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['RDS_DB_NAME'],
+        'USER': os.environ['RDS_USERNAME'],
+        'PASSWORD': os.environ['RDS_PASSWORD'],
+        'HOST': os.environ['RDS_HOSTNAME'],
+        'PORT': os.environ['RDS_PORT'],
+    }
+}
