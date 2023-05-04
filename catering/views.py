@@ -2,8 +2,11 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from .models import Menu, Inquiry
+from carts.models import Cart
 from customers.models import Customer
 from django.core.mail import send_mail
+
+from django.http import Http404
 
 import requests
 import json
@@ -12,6 +15,7 @@ import sweetify
 def home(request):
     context = {
         'title': "Catering | Dominique's Dishes",
+        'menus': Menu.objects.filter(available=True).exclude(obj_id="0001")
     }
     return render(request, 'catering-home.html', context)
 
@@ -98,3 +102,16 @@ def menu(request):
         'menu': menu_obj,
     }
     return render(request, 'catering-menu.html', context)
+
+def detail(request, slug):
+    #try:
+        obj = Menu.objects.get(slug=slug)
+        cart_obj,created = Cart.objects.new_or_get(request)
+        context = {
+            'menu': obj,
+            "title": "Dominique's Dishes | %s" %(obj.title),
+            'cart': render_to_string('cart.html', {'cart': cart_obj}),
+        }
+        return render(request, 'menu_detail.html', context)
+    #except:
+    #    raise Http404()

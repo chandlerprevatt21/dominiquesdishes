@@ -52,6 +52,7 @@ class Font(models.Model):
     
 class Menu(models.Model):
     obj_id              = models.CharField(max_length=64, blank=True, null=True)
+    type                = models.CharField(max_length=64, blank=True, null=True, default="regular")
     title               = models.CharField(max_length=270)
     slug                = models.SlugField(null=True, blank=True, unique=True)
     description         = models.TextField(blank=True)

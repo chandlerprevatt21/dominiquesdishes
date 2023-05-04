@@ -4,12 +4,21 @@
 {% block content %}
 <div class="page-body">
     <div class="menu">
+        {% if menu.type == 'regular' %}
         <a href="/menus/" class="back-to-menu"><i class="bi bi-arrow-left-circle"></i> Back to Menus</a>
+        {% elif menu.type == 'catering' %}
+        <a href="/catering/" class="back-to-menu"><i class="bi bi-arrow-left-circle"></i> Back to Catering</a>
+        {% endif %}
         <h1 class="menu-title">{{ menu.title }}</h1>
         <div class="w100 center-align">
             <div class="div-mini-dotted white"></div>
         </div>
         <h3 class="menu-description">{{ menu.description }}</h3>
+        {% if menu.type == 'catering' %}
+        <div class="w100 center-align">
+            <a href="/catering/request/" class="outline-btn fade-in2">Request a Quote</a>
+        </div>
+        {% endif %}
         <div class="row">
             {% for section in menu.sections.all %}
                 <div class="col-12 item-col">
@@ -18,15 +27,17 @@
                         {% for item in section.items.all %}
                         <div class="item-line d-flex justify-content-between">
                             <div class="left">
-                                <h5 class="item-title build-plate" item_id="{{ item.pk }}"><b>{{ item.title }}</b> {% if menu.available == True %}<i class="material-icons" data-mdb-toggle="tooltip" title="Build My Plate">add_circle</i>{% endif %}</h5>
+                                <h5 class="item-title build-plate" item_id="{{ item.pk }}"><b>{{ item.title }}</b> {% if menu.available == True %}{% if menu.type == 'regular' %}<i class="material-icons" data-mdb-toggle="tooltip" title="Build My Plate">add_circle</i>{% endif %}{% endif %}</h5>
                                 
                                 {% if item.description is not None %}
                                 <p class="item-description">{{ item.description }}</p>
                                 {% endif %}
                             </div>
+                            {% if item.price > 0 %}
                             <div class="right">
                                 <h6 class="item-price">${{ item.price }}</h6>
                             </div>
+                            {% endif %}
                         </div>
                         {% endfor %}
                     </div>
@@ -36,65 +47,67 @@
     </div>
 </div>
 {% if menu.available == True %}
-<script>
-    $(document).on('click', '#add-to-order', function(){
-        var sides = []
-        $('[name="sides"]:checked').each(function(){
-            sides.push($(this).val())
-        })
-        var data = {
-            'entree': $('[name="entree"]').attr('pk'),
-            'sides': JSON.stringify(sides),
-            'request': $('[name="request"]').val(),
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-        }
-        $.ajax({
-            data: data,
-            url: '/cart/add-menu-item/',
-            method: 'POST',
-        }).done(function( response ){
-            if(response[0].status == 'success'){
-
-                Swal.fire({
-                    icon: 'success',
-                    text: 'Item Added to Order!'
-                })
-                $('#cart-container').html(response[0].cart);
-                $('#cart-container').show(300);
-                $('#cart-counter').html(response[0].cartCounter);
-            }else{
-                Swal.fire({
-                    icon: 'error',
-                    text: String(response[0].message)
-                })
+    {% if menu.type == 'regular' %}
+    <script>
+        $(document).on('click', '#add-to-order', function(){
+            var sides = []
+            $('[name="sides"]:checked').each(function(){
+                sides.push($(this).val())
+            })
+            var data = {
+                'entree': $('[name="entree"]').attr('pk'),
+                'sides': JSON.stringify(sides),
+                'request': $('[name="request"]').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
             }
-        })
-    });
-$(document).ready(function(){
-    $('.build-plate').on('click', function(){
-        var data = {
-            'itemID': $(this).attr('item_id'),
-            'menu': '{{ menu.pk }}',
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-        }
-        $.ajax({
-            url: '/menus/item-form/',
-            method: 'POST',
-            data: data,
-        }).done(function( response ) {
-            console.log(response[0])
-            Swal.fire({
-                html: response[0].form,
-                showConfirmButton: false,
-                inputAutoFocus: false,
-                focusConfirm: false,
-                focusDeny: false
-            });
+            $.ajax({
+                data: data,
+                url: '/cart/add-menu-item/',
+                method: 'POST',
+            }).done(function( response ){
+                if(response[0].status == 'success'){
+
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Item Added to Order!'
+                    })
+                    $('#cart-container').html(response[0].cart);
+                    $('#cart-container').show(300);
+                    $('#cart-counter').html(response[0].cartCounter);
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        text: String(response[0].message)
+                    })
+                }
+            })
         });
-        
+    $(document).ready(function(){
+        $('.build-plate').on('click', function(){
+            var data = {
+                'itemID': $(this).attr('item_id'),
+                'menu': '{{ menu.pk }}',
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            }
+            $.ajax({
+                url: '/menus/item-form/',
+                method: 'POST',
+                data: data,
+            }).done(function( response ) {
+                console.log(response[0])
+                Swal.fire({
+                    html: response[0].form,
+                    showConfirmButton: false,
+                    inputAutoFocus: false,
+                    focusConfirm: false,
+                    focusDeny: false
+                });
+            });
+            
+        })
     })
-})
-</script>
+    </script>
+    {% endif %}
 {% endif %}
 <style>
     .back-to-menu {
