@@ -31,8 +31,9 @@
         <div class="center-align">
             <div class="div-mini-dotted"></div>
         </div>
+        <div class="row">
         {% for menu in menus %}
-        <div class="col-6 offset-3 col-md-4 offset-md-0">
+        <div class="col-6 col-md-4">
             <div class="menu-card card">
                 <a href="{{ menu.get_absolute_url }}">
                     
@@ -46,6 +47,7 @@
             </div>
         </div>
         {% endfor %}
+        </div>
         <div class="divider light w100"></div>
         <h3>Explore More Services</h3>
         <div class="center-align">

@@ -3,18 +3,21 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 
 from carts.models import Cart
+from catering.models import Menu as CateringMenu
 from .models import Menu, Item
+
 
 def home(request):
     menus = Menu.objects.filter(available=True)
     archived = Menu.objects.filter(available=False)
+    catering_menus = CateringMenu.objects.filter(available=True).exclude(slug="catering-menu")
     context = {
         'menus': menus,
         'archived': archived,
+        'catering_menus': catering_menus,
         'title': "Dominique's Dishes | Menus",
     }
     return render(request, 'menu_home.html', context)
-
 
 def detail(request, slug):
     try:
