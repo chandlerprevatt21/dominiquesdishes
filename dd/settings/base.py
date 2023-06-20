@@ -18,6 +18,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost']
 
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = '/login/'
+LOGIN_URL_REDIRECT = '/login/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,6 +35,7 @@ INSTALLED_APPS = [
     'carts',
     'catering',
     'customers',
+    'dashboard',
     'emails',
     'events',
     'gallery',

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'carts',
     'catering',
     'customers',
+    'dashboard',
     'emails',
     'events',
     'gallery',

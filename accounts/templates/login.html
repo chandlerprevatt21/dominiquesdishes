@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-body"  id="page">
+    <div class="row" id="content-row">
+        <div class="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-12 text-center hidden" id="spinner-container">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <form class="form login-form text-center" method="POST" action="/login/" id="login-form">
+                        <h3 class="section-title">Welcome Back!</h3>
+                        <div class="center-align">
+                        <div class="divider"></div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12 form-outline">
+                                <input type="email" id="email" class="form-control form-control-lg" name="email" required/>
+                                <label class="form-label" for="email">Email Address<b class="required">*</b></label>
+                            </div>
+                            <div class="col-12 form-outline">
+                                <input type="password" id="password" class="form-control form-control-lg" name="password" required/>
+                                <label class="form-label" for="password">Password<b class="required">*</b></label>
+                            </div>
+                        </div>
+                        <div class="row btn-row" style="margin-top: 0px">
+                            <btn role="submit" class="btn login-btn submit-btn" id="login-submit">Login</btn>
+                        </div>
+                        <div class="text-center forgot-pw">
+                            <p><b>Forgot password? <a href='/reset-password/'>Click here</a></b></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    h1 {
+        text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.269);
+    }
+    #content-row {
+        background: rgb(191,240,255);
+        background: linear-gradient(180deg, rgba(191,240,255,0.701362044817926) 0%, rgba(161, 219, 237, 0.926) 10%, rgba(87, 214, 252, 0.926) 53%, rgba(37, 189, 236, 0.926) 100%);
+        padding: 140px 5% 60px 5%;;
+    }
+    #content-row h3 {
+        font-size: 20px;
+        letter-spacing: 4px;
+    }
+    #content-row h3.script {
+        text-transform: none;
+        letter-spacing: 3px;
+        font-size: 46px;
+    }
+    #content-row p {
+        font-weight: 400;
+        color: rgb(25, 25, 25);
+        text-align: left;
+        font-size: 16px;
+        line-height:22px;
+    }
+    .forgot-pw {
+        margin-top: 15px;
+    }
+    input {
+        margin-bottom: 10px;
+    }
+    .page-body {
+        background: url('{% static "img/bird1.webp" %}');
+        background-size: 100%;
+        background-attachment: fixed;
+    }
+    p.bluejay {
+        text-transform: capitalize;
+        font-size: 22px;
+        letter-spacing: 3px;
+        font-weight: 800;
+    }
+    @media only screen and (min-width: 601px){
+        .page-body {
+            background-size: 50%;
+        }
+        #content-row p {
+            font-size: 16px;
+            line-height:24px;
+        }
+    }
+    @media only screen and (min-width: 992px){
+        #content-row {
+            padding: 160px 5% 80px 5%;
+        }
+        #content-row p {
+            text-align: center;
+            font-size: 18px;
+            line-height:26px;
+        }
+        #content-row h3.script {
+            letter-spacing: 3px;
+            font-size: 52px;
+        }
+        .page-body {
+            background-size: 40%;
+        }
+    }
+</style>
+<script>
+    $('#login-submit').on('click', function(event){
+        event.preventDefault;
+        if(($('#email').val() == "") || ($('#email').val() == undefined)){
+            Swal.fire({
+                'title': 'Email Address Required',
+                'text': 'Please enter a valid email address to continue',
+                'icon': 'error',
+            })
+        }else if(($('#password').val() == "") || ($('#password').val() == undefined)){
+            Swal.fire({
+                'title': 'Password Required',
+                'message': 'Please enter your password to continue',
+                'icon': 'error',
+            })
+        }else{
+            $('#login-form').addClass('hidden');
+            $('#spinner-container').removeClass('hidden');
+            var referrer = String(document.referrer);
+            var email = String($('input[name="email"]').val())
+            var password = String($('input[name="password"]').val())
+            var data = {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                'email': email,
+                'password': password,
+            }
+            $.ajax({
+                data: data,
+                url: '/login/',
+                method: 'POST',
+                success:function(data){
+                    console.log(data)
+                    if(data.status == 'authenticated'){
+                        if(referrer == ''){
+                            window.location.replace('/')
+                        }else{
+                            window.location.replace(referrer)
+                        }
+                    }else{
+                        $('#spinner-container').addClass('hidden');
+                        $('#login-form').removeClass('hidden');
+                        alert('no account!')
+                    }
+                }
+            })
+        }
+        
+    })
+</script>
+{% endblock %}
