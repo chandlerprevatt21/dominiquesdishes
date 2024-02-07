@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -13,8 +13,11 @@ from orders.models import Order, PickupDate, PickupTime
 import human_readable
 import json
 import stripe
-import sweetify
 
+def drop_carts(request):
+    Cart.objects.all().delete()
+    return HttpResponse('success')
+    
 def menu_cart_add(request):
     if request.method == 'POST':
         cart_obj,created = Cart.objects.new_or_get(request)
@@ -186,7 +189,9 @@ def checkout_success(request):
                 'timestamp': order_obj.created,
             })
             notif_plain_text = 'New Order Received'
-            send_mail(notif_subject, notif_plain_text, from_email, ['carolyn@dominiquesdishes.com','dominiquesdishes@gmail.com'], html_message=notif_content)
+            notif_recipients = ['carolyn@dominiquesdishes.com','dominiquesdishes@gmail.com', 'chandler@eliftcreations.com']
+            #notif_recipients = ['chandler@eliftcreations.com']
+            send_mail(notif_subject, notif_plain_text, from_email, notif_recipients, html_message=notif_content)
             
             receipt_subject = "Dominique's Dishes | Order Confirmation: %s" %(order_obj.obj_id)
             receipt_content = render_to_string('receipt.html', 

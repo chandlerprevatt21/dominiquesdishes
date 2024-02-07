@@ -31,7 +31,7 @@ class Item(models.Model):
         return self.title
     
     class Meta:
-        ordering = ['price', 'title']
+        ordering = ['-price', 'title']
         
 class Section(models.Model):
     type                = models.CharField(choices=ITEM_TYPE_CHOICES, max_length=64, default='entree')
